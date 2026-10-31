@@ -1,0 +1,105 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Student Grade Calculator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+</head>
+
+<body>
+
+    <div class="container">
+
+        <header>
+            <div class="logo">SG</div>
+            <h1>Student Grade Calculator</h1>
+            <p>Calculate your academic performance easily.</p>
+        </header>
+
+        <main class="calculator">
+
+            <h2>Enter Student Details</h2>
+
+            {% if error %}
+                <p class="error">{{ error }}</p>
+            {% endif %}
+
+            <form method="POST">
+
+                <label>Student Name</label>
+                <input type="text" name="name"
+                       placeholder="Enter your name" required>
+
+                <div class="subject-grid">
+
+                    {% for subject in
+                    ["English", "Math", "Science", "Computer", "Hindi"] %}
+
+                        <div class="field">
+                            <label>{{ subject }} Marks</label>
+                            <input type="number"
+                                   name="{{ subject }}"
+                                   min="0" max="100"
+                                   placeholder="0 - 100"
+                                   required>
+                        </div>
+
+                    {% endfor %}
+
+                </div>
+
+                <button type="submit">Calculate Result</button>
+
+            </form>
+
+            {% if result %}
+
+            <section class="result">
+
+                <h2>Student Result</h2>
+
+                <h3>{{ result.name }}</h3>
+
+                <div class="result-grid">
+
+                    <div class="result-card">
+                        <span>Total Marks</span>
+                        <strong>{{ result.total }}/500</strong>
+                    </div>
+
+                    <div class="result-card">
+                        <span>Percentage</span>
+                        <strong>{{ result.percentage }}%</strong>
+                    </div>
+
+                    <div class="result-card">
+                        <span>Grade</span>
+                        <strong>{{ result.grade }}</strong>
+                    </div>
+
+                    <div class="result-card">
+                        <span>Result</span>
+                        <strong>{{ result.status }}</strong>
+                    </div>
+
+                </div>
+
+            </section>
+
+            {% endif %}
+
+        </main>
+
+        <footer>
+            <p>Student Grade Calculator | Built with Python & Flask</p>
+        </footer>
+
+    </div>
+
+</body>
+</html>
